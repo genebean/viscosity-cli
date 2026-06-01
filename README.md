@@ -37,6 +37,29 @@ go install github.com/yourusername/viscosity-cli@latest
    sudo mv viscosity-cli /usr/local/bin/
    ```
 
+### Option 3: Install via Nix / Home Manager
+
+1. Add this repo as an input a la
+   ```nix
+   inputs = {
+     viscosity-cli = {
+       url = "github:danielbooth-cloud/viscosity-cli";
+       inputs.nixpkgs.follows = "nixpkgs";
+   };
+   ```
+2. Add to your list of installed package:
+   ```nix
+   environment.systemPackages = with pkgs; [
+     inputs.viscosity-cli.packages.${pkgs.stdenv.hostPlatform.system}.default
+   ];
+   ```
+
+You can also use it without installing via 
+
+```nix
+nix run github:danielbooth-cloud/viscosity-cli -- status # or any other command
+```
+
 #### Alias
 I recommend setting an alias in your bash or zsh profile.
 
